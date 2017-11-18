@@ -1,12 +1,11 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import SearchBooks from './SearchBooks'
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    showSearchPage: true
   }
 
   render() {
@@ -169,7 +168,7 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link to="/search">Add a book</Link>
             </div>
           </div>
         )} />
