@@ -7,27 +7,35 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
     shelves: [
       {
         id: "currentlyReading",
-        title: "Currently Reading"
+        title: "Currently Reading",
+        books: []
       },
       {
         id: "wantToRead",
-        title: "Want to Read"
+        title: "Want to Read",
+        books: []
       },
       {
         id: "read",
-        title: "Read"
+        title: "Read",
+        books: []
       }
     ]
   }
 
   componentDidMount() {
-    BooksAPI.getAll().then((books) => {
-      console.log(books);
-      this.setState({ books })
+    BooksAPI.getAll().then((bookData) => {
+      const newState = this.state
+      newState.shelves.map( (shelf) => (
+        shelf.books = bookData.filter( (book) => {
+          return shelf.id === book.shelf
+        })
+      ))
+      this.setState( newState )
+
     })
   }
 
@@ -42,7 +50,7 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               <div>
                 {this.state.shelves.map((shelf) => (
-                  <Bookshelf key={shelf.id} shelf={shelf}/>
+                  <Bookshelf key={shelf.id} shelf={shelf} />
                 ))}
               </div>
             </div>
