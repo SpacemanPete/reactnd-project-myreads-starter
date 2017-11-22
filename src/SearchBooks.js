@@ -7,20 +7,30 @@ class SearchBooks extends Component {
 
   state = {
     query: '',
+    noResults: false,
     foundBooks: []
   }
 
   updateQuery = (query) => {
-    this.setState({ query: query.trim() })
+    this.setState({ query: query })
     if (query) {
-      BooksAPI.search(query.trim(), 10).then( (foundBooks) => (
-        this.setState({ foundBooks })
-      ))
+      BooksAPI.search(query, 10).then( (foundBooks) => {
+        if (foundBooks.error === 'empty query') {
+          this.setState({ noResults: true })
+          console.log('No Results');
+          
+        } else {
+          this.setState({ noResults: false })
+          this.setState({ foundBooks })
+          console.log(foundBooks);
+        }
+      })
     }
   }
 
   render () {
     const { query, foundBooks } = this.state
+    
     return (
       <div className="search-books">
       <div className="search-books-bar">
@@ -36,9 +46,9 @@ class SearchBooks extends Component {
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
-          {foundBooks.map( (book) => (
+          {foundBooks.map((book) => (
             <li key={book.id}>
-            <Book book={book}/>
+              <Book book={book}/>
             </li>
           ))}
         </ol>
