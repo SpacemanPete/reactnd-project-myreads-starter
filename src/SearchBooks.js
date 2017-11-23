@@ -7,20 +7,18 @@ class SearchBooks extends Component {
 
   state = {
     query: '',
-    noResults: false,
     foundBooks: []
   }
 
   updateQuery = (query) => {
     this.setState({ query: query })
     if (query) {
-      BooksAPI.search(query, 10).then( (foundBooks) => {
+      BooksAPI.search(query, 20).then( (foundBooks) => {
         if (foundBooks.error === 'empty query') {
-          this.setState({ noResults: true })
+          this.setState({ foundBooks: [] })
           console.log('No Results');
           
         } else {
-          this.setState({ noResults: false })
           this.setState({ foundBooks })
           console.log(foundBooks);
         }
