@@ -71,7 +71,7 @@ render() {
         </div>
       )} />
       <Route path="/search" render={() => (
-        <SearchBooks />
+        <SearchBooks handleChange={this.shelfUpdate}/>
       )} />
     </div>
   )

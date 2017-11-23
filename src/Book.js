@@ -1,28 +1,35 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class Book extends Component {
+
+  static PropTypes = {
+    book: PropTypes.array.isRequired
+  }
 
   moveBook(book, event) {
     if(event) {
       const newShelf = event.target.value
-      if (newShelf !== 'none') {
         this.props.handleChange(book, newShelf)
-      }
     }
   }
 
   render() {
 
-    const { book } = this.props
+    let { book } = this.props
+    let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : ''
+    let shelf = book.shelf ? book.shelf : 'none'
+    let title = book.title ? book.title : ''
+    let authors = book.authors ? book.authors : []
 
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + book.imageLinks.thumbnail + '")' }}></div>
+          <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + thumbnail + '")' }}></div>
           <div className="book-shelf-changer">
             <select 
               onChange={this.moveBook.bind(this, book)}
-              defaultValue={book.shelf}  
+              defaultValue={shelf}  
             >
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
@@ -32,8 +39,8 @@ class Book extends Component {
             </select>
           </div>
         </div>
-        <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.authors.map( (name) => (
+        <div className="book-title">{title}</div>
+        <div className="book-authors">{authors.map( (name) => (
           <div key={name}>{name}</div>
         ))}</div>
       </div>
