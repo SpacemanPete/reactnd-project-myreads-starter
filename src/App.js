@@ -7,23 +7,7 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    shelves: [
-      {
-        id: "currentlyReading",
-        title: "Currently Reading",
-        books: []
-      },
-      {
-        id: "wantToRead",
-        title: "Want to Read",
-        books: []
-      },
-      {
-        id: "read",
-        title: "Read",
-        books: []
-      }
-    ]
+    books: []
   }
 
   componentDidMount() {
@@ -31,14 +15,8 @@ class BooksApp extends React.Component {
   }
 
   getBooks() {
-    BooksAPI.getAll().then((bookData) => {
-      const newState = this.state
-      newState.shelves.map((shelf) => (
-        shelf.books = bookData.filter((book) => {
-          return shelf.id === book.shelf
-        })
-      ))
-      this.setState(newState)
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
     })
   }
 
@@ -46,36 +24,47 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, newShelf).then( (response) => this.getBooks() )
   }
 
-render() {
-  return (
-    <div className="app">
-      <Route exact path="/" render={() => (
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <div className="list-books-content">
-            <div>
-              {this.state.shelves.map((shelf) => (
-                <Bookshelf
-                  key={shelf.id}
-                  shelf={shelf}
+  render() {
+    return (
+      <div className="app">
+        <Route exact path="/" render={() => (
+          <div className="list-books">
+            <div className="list-books-title">
+              <h1>MyReads</h1>
+            </div>
+            <div className="list-books-content">
+              <div>
+                <Bookshelf 
+                  title="Currently Reading" 
+                  shelfFilter="currentlyReading"
+                  books={this.state.books} 
                   handleChange={this.shelfUpdate}
                 />
-              ))}
+                <Bookshelf 
+                  title="Want to Read" 
+                  shelfFilter="wantToRead"
+                  books={this.state.books} 
+                  handleChange={this.shelfUpdate}
+                />
+                <Bookshelf 
+                  title="Read" 
+                  shelfFilter="read"
+                  books={this.state.books} 
+                  handleChange={this.shelfUpdate}
+                />
+              </div>
+            </div>
+            <div className="open-search">
+              <Link to="/search">Add a book</Link>
             </div>
           </div>
-          <div className="open-search">
-            <Link to="/search">Add a book</Link>
-          </div>
-        </div>
-      )} />
-      <Route path="/search" render={() => (
-        <SearchBooks handleChange={this.shelfUpdate}/>
-      )} />
-    </div>
-  )
-}
+        )} />
+        <Route path="/search" render={() => (
+          <SearchBooks handleChange={this.shelfUpdate}/>
+        )} />
+      </div>
+    )
+  }
 }
 
 export default BooksApp

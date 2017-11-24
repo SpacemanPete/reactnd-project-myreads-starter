@@ -23,6 +23,8 @@ class SearchBooks extends Component {
           console.log(foundBooks);
         }
       })
+    } else {
+      this.setState({ foundBooks: [] })
     }
   }
 
