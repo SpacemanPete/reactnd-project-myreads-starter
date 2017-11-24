@@ -17,7 +17,7 @@ class Book extends Component {
   render() {
 
     let { book } = this.props
-    let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : ''
+    let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=No%20Cover'
     let shelf = book.shelf ? book.shelf : 'none'
     let title = book.title ? book.title : ''
     let authors = book.authors ? book.authors : []
