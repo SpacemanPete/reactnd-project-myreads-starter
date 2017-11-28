@@ -37,19 +37,19 @@ class BooksApp extends React.Component {
                 <Bookshelf 
                   title="Currently Reading" 
                   shelfFilter="currentlyReading"
-                  books={this.state.books} 
+                  books={this.state.books}
                   handleChange={this.shelfUpdate}
                 />
                 <Bookshelf 
                   title="Want to Read" 
                   shelfFilter="wantToRead"
-                  books={this.state.books} 
+                  books={this.state.books}
                   handleChange={this.shelfUpdate}
                 />
                 <Bookshelf 
                   title="Read" 
                   shelfFilter="read"
-                  books={this.state.books} 
+                  books={this.state.books}
                   handleChange={this.shelfUpdate}
                 />
               </div>
@@ -60,7 +60,10 @@ class BooksApp extends React.Component {
           </div>
         )} />
         <Route path="/search" render={() => (
-          <SearchBooks handleChange={this.shelfUpdate}/>
+          <SearchBooks 
+            shelvedBooks={this.state.books}
+            handleChange={this.shelfUpdate}
+          />
         )} />
       </div>
     )

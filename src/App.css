@@ -121,6 +121,18 @@ body, .app {
 
 .book {
   width: 140px;
+  padding: 10px;
+  border-radius: 5px;
+  height: 100%;
+}
+.book.currentlyReading {
+  background-color: green;
+}
+.book.wantToRead {
+  background-color: orange;
+}
+.book.read {
+  background-color: gray;
 }
 .book-title,
 .book-authors {

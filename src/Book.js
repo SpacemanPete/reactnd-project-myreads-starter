@@ -16,14 +16,20 @@ class Book extends Component {
 
   render() {
 
-    let { book } = this.props
+    let { book, shelvedBooks } = this.props
     let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : 'http://via.placeholder.com/128x193?text=No%20Cover'
-    let shelf = book.shelf ? book.shelf : 'none'
     let title = book.title ? book.title : ''
     let authors = book.authors ? book.authors : []
-
+    let shelf = book.shelf ? book.shelf : 'none'
+    if (shelvedBooks) {
+      shelvedBooks.forEach( (shelvedBook) => {
+        if (shelvedBook.id === book.id) 
+          shelf = shelvedBook.shelf
+      });
+    }
+    
     return (
-      <div className="book">
+      <div className={"book " + shelf}>
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("' + thumbnail + '")' }}></div>
           <div className="book-shelf-changer">

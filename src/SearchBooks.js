@@ -16,11 +16,8 @@ class SearchBooks extends Component {
       BooksAPI.search(query, 20).then( (foundBooks) => {
         if (foundBooks.error === 'empty query') {
           this.setState({ foundBooks: [] })
-          console.log('No Results');
-          
         } else {
           this.setState({ foundBooks })
-          console.log(foundBooks);
         }
       })
     } else {
@@ -30,7 +27,7 @@ class SearchBooks extends Component {
 
   render () {
     const { query, foundBooks } = this.state
-    let { handleChange } = this.props
+    let { shelvedBooks, handleChange } = this.props
     
     return (
       <div className="search-books">
@@ -51,6 +48,7 @@ class SearchBooks extends Component {
             <li key={book.id}>
               <Book 
                 book={book}
+                shelvedBooks={shelvedBooks}
                 handleChange={handleChange}
               />
             </li>
